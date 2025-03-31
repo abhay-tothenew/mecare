@@ -9,11 +9,11 @@ export const metadata: Metadata = {
   keywords: "healthcare, medical, appointments, booking",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
+}
+
+export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
   return (
     <AuthProvider>
       <html lang="en">

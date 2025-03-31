@@ -14,42 +14,47 @@ const http = require("http");
 
 require("./config/googleAuth");
 
-app.use(morgan("dev"));
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
-
-// Session middleware
-app.use(
+const middleware = [
+  morgan("dev"),
+  helmet(),
+  cors(),
+  express.json(),
   session({
     secret: process.env.JWT_SECRET_KEY,
     resave: false,
     saveUninitialized: false,
     cookie: {
       secure: process.env.NODE_ENV === "production",
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      maxAge: 24 * 60 * 60 * 1000,
     },
-  })
-);
+  }),
+  passport.initialize(),
+  passport.session(),
+];
 
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Swagger UI
+app.use(middleware);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
-// Routes
-app.use("/auth", require("./routes/auth"));
-app.use("/api/users", require("./routes/users"));
-app.use("/api/doctors", require("./routes/doctors"));
-app.use("/api/appointments", require("./routes/appointments"));
-app.use("/api/disease", require("./routes/disease"));
-app.use("/api/slots", require("./routes/slots"));
-app.use("/api/reviews", require("./routes/reviews"));
-app.use("/api/admin", require("./routes/admin"));
+const routes = [
+  ["/auth", "./routes/auth"],
+  ["/api/users", "./routes/users"],
+  ["/api/doctors", "./routes/doctors"],
+  ["/api/appointments", "./routes/appointments"],
+  ["/api/disease", "./routes/disease"],
+  ["/api/slots", "./routes/slots"],
+  ["/api/reviews", "./routes/reviews"],
+  ["/api/admin", "./routes/admin"],
+];
+
+routes.forEach(([path, route]) => app.use(path, require(route)));
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Something went wrong!" });
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server is running at ${PORT}`);
-  console.log(`API Documentation available at http://localhost:${PORT}/api-docs`);
+  console.log(`Server running on port ${PORT}`);
+  console.log(`API docs: http://localhost:${PORT}/api-docs`);
 });

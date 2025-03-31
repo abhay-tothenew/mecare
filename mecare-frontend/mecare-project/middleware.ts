@@ -1,16 +1,21 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function middleware(request: NextRequest) {
-  const token = request.cookies.get('token')?.value || request.headers.get('Authorization')?.split(' ')[1]
-  const isAuthPage = request.nextUrl.pathname.startsWith('/auth')
-  const isProtectedRoute = request.nextUrl.pathname.startsWith('/user-profile')
+const getToken = (request: NextRequest) => 
+  request.cookies.get('token')?.value || request.headers.get('Authorization')?.split(' ')[1]
 
-  if (isProtectedRoute && !token) {
+const isProtectedRoute = (pathname: string) => pathname.startsWith('/user-profile')
+const isAuthPage = (pathname: string) => pathname.startsWith('/auth')
+
+export function middleware(request: NextRequest) {
+  const token = getToken(request)
+  const pathname = request.nextUrl.pathname
+
+  if (isProtectedRoute(pathname) && !token) {
     return NextResponse.redirect(new URL('/auth/login', request.url))
   }
 
-  if (isAuthPage && token) {
+  if (isAuthPage(pathname) && token) {
     return NextResponse.redirect(new URL('/home', request.url))
   }
 
@@ -18,8 +23,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    '/user-profile/:path*',
-    '/auth/:path*',
-  ]
+  matcher: ['/user-profile/:path*', '/auth/:path*']
 } 

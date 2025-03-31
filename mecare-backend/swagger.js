@@ -10,11 +10,11 @@ const options = {
     },
     servers: [
       {
-        url: 'https://mecare-frontend.vercel.app',
+        url: process.env.FRONTEND_URL || 'https://mecare.vercel.app/home',
         description: 'Development server',
       },
       {
-        url: 'https://mecare-backend.onrender.com',
+        url: process.env.BACKEND_URL || 'https://mecare-backend.onrender.com',
         description: 'Production server',
       },
     ],
@@ -27,13 +27,9 @@ const options = {
         },
       },
     },
-    security: [{
-      bearerAuth: [],
-    }],
+    security: [{ bearerAuth: [] }],
   },
-  apis: ['./routes/*.js', './controllers/*.js'], // Path to the API docs
+  apis: ['./routes/*.js', './controllers/*.js'],
 };
 
-const specs = swaggerJsdoc(options);
-
-module.exports = specs; 
+module.exports = swaggerJsdoc(options); 

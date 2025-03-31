@@ -35,7 +35,6 @@ export default function RescheduleModal({
     const fetchAppointmentDetails = async () => {
       try {
         const response = await fetch(
-          // `http://localhost:5000/api/appointments/${userId}`
           API_ENDPOINTS.APPOINTMENT_BY_ID(userId)
         );
 

@@ -39,7 +39,6 @@ function AuthCallbackContent() {
         profile_picture: payload.profile_picture || "",
       };
 
-      // Only access localStorage on the client side
       if (typeof window !== 'undefined') {
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(userData));
@@ -53,7 +52,6 @@ function AuthCallbackContent() {
       });
 
       router.refresh();
-      // Redirect based on role
       router.push(payload.role ? "https://mecare.vercel.app/home" : "https://mecare.vercel.app/home");
     } catch (error) {
       console.error("Error decoding token:", error);

@@ -4,7 +4,7 @@ export interface RegisterUser {
   email: string;
   password: string;
   phone: string;
-  userType: string;
+  userType?: string;
 }
 
 export interface ValidationErrors {
@@ -13,4 +13,15 @@ export interface ValidationErrors {
   password?: string;
   phone?: string;
   userType?: string;
+}
+
+
+export interface LoginUser {
+  email: string;
+  password: string;
+}
+
+export interface ValidationErrors {
+  email?: string;
+  password?: string;
 }

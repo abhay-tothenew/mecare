@@ -63,7 +63,6 @@ exports.getTopDoctors = async (req, res) => {
   }
 };
 
-//fetch doctors based on specialization
 
 exports.getDoctorsBySpecialization = async (req, res) => {
   try {
@@ -84,7 +83,6 @@ exports.getDoctorsBySpecialization = async (req, res) => {
 
     const total_doctors = total_count.rows[0].count;
     const total_pages = Math.ceil(total_doctors / 6);
-    // console.log(category_name);
     res.json({
       success: true,
       message: "Doctors retrieved successfully",

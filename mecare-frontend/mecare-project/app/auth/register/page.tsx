@@ -7,21 +7,9 @@ import { AtSign, LockIcon, User, Phone } from "lucide-react";
 import { redirect } from "next/navigation";
 import { useAuth } from "@/app/utils/context/Authcontext";
 import { API_ENDPOINTS } from "@/app/utils/api/config";
+import {ValidationErrors,RegisterUser} from "../login/type"
 
-interface RegisterUser {
-  displayName: string;
-  name: string;
-  email: string;
-  password: string;
-  phone: string;
-}
 
-interface ValidationErrors {
-  name?: string;
-  email?: string;
-  password?: string;
-  phone?: string;
-}
 
 export default function Register() {
   const [name, setName] = useState("");

@@ -2,8 +2,6 @@
 import { useEffect, useState } from "react";
 import styles from "../../styles/categoryDoctor.module.css";
 import Footer from "@/app/components/Footer";
-// import SearchBar from "@/app/components/SearchBar";
-// import Image from "next/image";
 import { use } from "react";
 import { Doctor } from "./type";
 import DoctorCard from "@/app/components/DoctorCard";
@@ -18,7 +16,6 @@ export default function Category({
   const category = resolvedParams.category;
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [filteredDoctors, setFilteredDoctors] = useState<Doctor[]>([]);
-  // const [display_category, setDisplayCategory] = useState("");
   const [filters, setFilters] = useState({
     rating: 0,
     experience: "all",
@@ -45,8 +42,6 @@ export default function Category({
     const fetchBySpecialty = async () => {
       try {
         const categoryName = category.split("_").join(" ");
-        // console.log("category_name", categoryName);
-        // category.charAt(0).toUpperCase() + category.slice(1);
         const category_name = categoryName
           .split(" ")
           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))

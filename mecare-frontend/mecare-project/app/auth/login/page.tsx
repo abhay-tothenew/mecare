@@ -7,16 +7,8 @@ import { redirect } from "next/navigation";
 import { useAuth } from "@/app/utils/context/Authcontext";
 import { API_ENDPOINTS } from "@/app/utils/api/config";
 import Image from "next/image";
+import { ValidationErrors,LoginUser } from "./type";
 
-interface LoginUser {
-  email: string;
-  password: string;
-}
-
-interface ValidationErrors {
-  email?: string;
-  password?: string;
-}
 
 export default function Login() {
   const [email, setEmail] = useState("");

@@ -54,7 +54,6 @@ export default function ScheduleSlot({
         }
 
         const data = await response.json();
-        // console.log("slots----->>>", data.slots);
         const unavailableMap = new Map<string, Set<string>>();
 
         data.slots.forEach(
@@ -127,7 +126,6 @@ export default function ScheduleSlot({
       days.push(new Date(year, month, i));
     }
 
-    // Add days from next month
     const remainingDays = 42 - days.length; // 6 weeks * 7 days = 42
     for (let i = 1; i <= remainingDays; i++) {
       days.push(new Date(year, month + 1, i));
@@ -136,7 +134,6 @@ export default function ScheduleSlot({
     setCalendarDays(days);
   }, [currentMonth]);
 
-  // Fetch Appointments for Selected Doctor
   useEffect(() => {
     if (!doctorId) return;
 
@@ -161,12 +158,6 @@ export default function ScheduleSlot({
 
     fetchAppointments();
   }, [doctorId]);
-
-  // const isTimeSlotAvailable = (date:string, time:string) => {
-  //   console.log("->>>",date);
-  //   const unavailableSlots = unavailableDates.get(date);
-  //   return !unavailableSlots?.has(time);
-  // }
 
   const generateTimeSlots = () => {
     const morningSlots = [];
@@ -195,7 +186,6 @@ export default function ScheduleSlot({
           .toString()
           .padStart(2, "0")}`;
 
-        // Check if this time is unavailable for any date
         const isUnavailable = Array.from(unavailableDates.values()).some(
           (times) => times.has(time)
         );
@@ -216,11 +206,8 @@ export default function ScheduleSlot({
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // Prevent selecting past dates
-
     if (date < today) return false;
 
-    // Show all future dates as available
     return true;
   };
 
@@ -228,12 +215,10 @@ export default function ScheduleSlot({
     return date.getMonth() === currentMonth.getMonth();
   };
 
-  // Filter available slots based on selected date and time section
   const availableSlots = (
     morningSlots: { time: string; available: boolean }[],
     eveningSlots: { time: string; available: boolean }[]
   ) => {
-    // Get all booked appointments for the selected date
     const bookedAppointments = appointments
       .filter(
         (appt) =>
@@ -463,13 +448,6 @@ export default function ScheduleSlot({
                 {isCheckingAppointment ? "Checking..." : "Next"}
               </button>
             </div>
-            {/* 
-            <Image
-              src="/assets/slot-book.svg"
-              alt="Doctor with Patient"
-              width={500}
-              height={500}
-            /> */}
           </div>
         </section>
       </div>

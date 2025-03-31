@@ -1,5 +1,4 @@
 const pool = require("../config/db");
-const moment = require("moment");
 const sendMail = require("../services/emailService");
 const { validateAppointmentSlot } = require("../services/appointmentService");
 
@@ -66,7 +65,6 @@ exports.createAppointment = async (req, res) => {
       health_description,
     } = req.body;
 
-    // First check for existing appointments
     const existingAppointment = await pool.query(
       `SELECT * FROM appointments 
        WHERE user_id = $1 
@@ -104,14 +102,13 @@ exports.createAppointment = async (req, res) => {
 
     const { startTime, endTime } = slotValidation;
 
-    // Check if slot exists
-    let slotResult = await pool.query(
+    let slot_res = await pool.query(
       `SELECT slot_id FROM slots WHERE doctor_id = $1 AND start_time = $2 AND slot_date = $3`,
       [doctor_id, startTime, appointment_date]
     );
 
     let slot_id;
-    if (slotResult.rows.length === 0) {
+    if (slot_res.rows.length === 0) {
       const newSlot = await pool.query(
         `INSERT INTO slots (doctor_id, start_time, end_time, slot_date, availability_status, slot_type) 
          VALUES ($1, $2, $3, $4, FALSE, $5) RETURNING slot_id`,
@@ -120,7 +117,6 @@ exports.createAppointment = async (req, res) => {
       slot_id = newSlot.rows[0].slot_id;
     }
 
-    // Create the appointment
     const appointmentResult = await pool.query(
       `INSERT INTO appointments (user_id, doctor_id, slot_id, appointment_type, appointment_date, appointment_time, patient_name, phone_number, patient_email, patient_gender, patient_age, health_description) 
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
@@ -141,7 +137,6 @@ exports.createAppointment = async (req, res) => {
       ]
     );
 
-    // Get doctor name for email
     const name = await pool.query(
       "SELECT name FROM doctors WHERE doctor_id = $1",
       [doctor_id]
@@ -149,7 +144,6 @@ exports.createAppointment = async (req, res) => {
 
     const doctorName = name.rows[0].name;
 
-    // Send confirmation email
     const user_email = patient_email;
     let subject = `MeCare - Your Appointment Status: Pending`;
 

@@ -1,0 +1,633 @@
+/* landing page css */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1c4a2a 0%, #2d6a3f 100%);
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+  margin: 0;
+  max-width: 100%;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 100%;
+}
+
+.nav_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding-left: 10px;
+}
+
+.nav_container h1 {
+  color: #1c4a2a;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.logo {
+  display: flex;
+  font-size: 1.5rem;
+  font-weight: bold;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.navLinks li {
+  margin-right: 1rem;
+  font-size: 18px;
+  font-family: "Montserrat", sans-serif;
+  gap: 40px;
+  font-weight: 500;
+  color: #8c8c8c;
+}
+
+.navLinks li:hover {
+  color: #1c4a2a;
+  cursor: pointer;
+}
+
+.authButtons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-right: 10px;
+}
+
+.login {
+  background-color: #fff;
+  color: #0e2515;
+  padding: 12px 20px;
+  border: 1px solid #e0e8e0;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+}
+
+.register {
+  background-color: #1c4a2a;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 1400px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.heroText {
+  flex: 1;
+  max-width: 600px;
+}
+
+.heroText h1 {
+  font-size: 3rem;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.heroText p {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.heroText button {
+  margin-top: 80px;
+  background-color: #fff;
+  color: #1c4a2a;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s ease;
+}
+.getStarted {
+  background-color: #fff;
+  color: #1c4a2a;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: "20px";
+}
+
+.heroImage {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.heroImage img {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.bookingCard {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 500px;
+  transition: transform 0.3s ease;
+}
+
+.bookingCard:hover {
+  transform: translateY(-5px);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.cardHeader h2 {
+  font-size: 1.5rem;
+  color: #1c4a2a;
+  margin: 0;
+  font-weight: 600;
+}
+
+.tabToggle {
+  display: flex;
+  gap: 0.25rem;
+  background: #f0f7f3;
+  padding: 0.25rem;
+  border-radius: 8px;
+}
+
+.tab {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: none;
+  color: #4a774d;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.tab.active {
+  background: white;
+  color: #1c4a2a;
+  box-shadow: 0 4px 12px rgba(28, 74, 42, 0.1);
+}
+
+.calendar {
+  margin-bottom: 1.5rem;
+  background: #f8faf9;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.calendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.calendarHeader button {
+  background: white;
+  border: none;
+  font-size: 1.25rem;
+  color: #1c4a2a;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(28, 74, 42, 0.1);
+}
+
+.calendarHeader button:hover {
+  background: #e8f5e9;
+  transform: translateY(-2px);
+}
+
+.calendarHeader h3 {
+  font-size: 1.25rem;
+  color: #1c4a2a;
+  margin: 0;
+  font-weight: 600;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+}
+
+.calendarDayHeader {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #4a774d;
+  padding: 0.25rem;
+  font-weight: 500;
+}
+
+.calendarDay {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: white;
+  font-size: 0.875rem;
+  color: #1c4a2a;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(28, 74, 42, 0.1);
+}
+
+.calendarDay.otherMonth {
+  color: #ccc;
+  background: #f8faf9;
+}
+
+.calendarDay.available {
+  background: white;
+}
+
+.calendarDay.available:hover {
+  background: #e8f5e9;
+  color: #1c4a2a;
+  transform: translateY(-2px);
+}
+
+.calendarDay.selected {
+  background: #1c4a2a;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.calendarDay.unavailable {
+  color: #ccc;
+  cursor: not-allowed;
+  background: #f8faf9;
+}
+
+.slotsContainer {
+  margin-bottom: 1.5rem;
+  background: #f8faf9;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.slotsContainer h3 {
+  font-size: 1.1rem;
+  color: #1c4a2a;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+}
+
+.timeSectionToggle {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  background: white;
+  padding: 0.25rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(28, 74, 42, 0.1);
+}
+
+.timeSectionButton {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  background: none;
+  color: #4a774d;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.timeSectionButton.active {
+  background: #e8f5e9;
+  color: #1c4a2a;
+}
+
+.timeSlots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 0.5rem;
+}
+
+.timeSlot {
+  padding: 0.75rem;
+  border: 2px solid #e8f5e9;
+  border-radius: 8px;
+  background: white;
+  color: #1c4a2a;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.timeSlot:hover:not(:disabled) {
+  background: #e8f5e9;
+  border-color: #1c4a2a;
+  color: #1c4a2a;
+  transform: translateY(-2px);
+}
+
+.timeSlot.selected {
+  background: #1c4a2a;
+  color: white;
+  border-color: #1c4a2a;
+  transform: translateY(-2px);
+}
+
+.timeSlot:disabled {
+  background: #f8faf9;
+  color: #ccc;
+  cursor: not-allowed;
+  border-color: #e8f5e9;
+}
+
+.nextButton {
+  width: 100%;
+  padding: 1rem;
+  background: #1c4a2a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nextButton:hover:not(:disabled) {
+  background: #153d21;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(28, 74, 42, 0.2);
+}
+
+.nextButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .container {
+    background: linear-gradient(135deg, #0a1f12 0%, #1a3d24 100%);
+  }
+
+  .hero {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .heroText h1 {
+    color: #ffffff;
+  }
+
+  .heroText p {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  .bookingCard {
+    background: #1a1a1a;
+  }
+
+  .cardHeader h2,
+  .calendarHeader h3,
+  .slotsContainer h3 {
+    color: #ffffff;
+  }
+
+  .tab {
+    color: #6abf6e;
+  }
+
+  .tab.active {
+    background: #2d2d2d;
+    color: #6abf6e;
+  }
+
+  .calendar,
+  .slotsContainer {
+    background: #2d2d2d;
+  }
+
+  .calendarDay {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .calendarDay.otherMonth {
+    background: #2d2d2d;
+    color: #666;
+  }
+
+  .calendarDay.available {
+    background: #1a1a1a;
+  }
+
+  .calendarDay.available:hover {
+    background: #2d2d2d;
+    color: #6abf6e;
+  }
+
+  .calendarDay.selected {
+    background: #1c4a2a;
+    color: white;
+  }
+
+  .calendarDay.unavailable {
+    background: #2d2d2d;
+    color: #666;
+  }
+
+  .timeSlot {
+    background: #1a1a1a;
+    border-color: #2d2d2d;
+    color: #ffffff;
+  }
+
+  .timeSlot:hover:not(:disabled) {
+    background: #2d2d2d;
+    border-color: #1c4a2a;
+    color: #6abf6e;
+  }
+
+  .timeSlot:disabled {
+    background: #2d2d2d;
+    color: #666;
+    border-color: #2d2d2d;
+  }
+
+  .timeSectionToggle {
+    background: #1a1a1a;
+  }
+
+  .timeSectionButton {
+    color: #6abf6e;
+  }
+
+  .timeSectionButton.active {
+    background: #2d2d2d;
+    color: #6abf6e;
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+    padding: 1.5rem;
+  }
+
+  .heroText {
+    max-width: 100%;
+  }
+
+  .heroText h1 {
+    font-size: 2.5rem;
+  }
+
+  .heroImage {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .bookingCard {
+    max-width: 100%;
+  }
+
+  .heroImage img {
+    width: 80%;
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .hero {
+    padding: 1rem;
+  }
+
+  .heroText h1 {
+    font-size: 2rem;
+  }
+
+  .bookingCard {
+    padding: 1.5rem;
+  }
+
+  .calendarGrid {
+    gap: 0.5rem;
+  }
+
+  .calendarDay {
+    font-size: 0.875rem;
+  }
+
+  .timeSlots {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .heroImage img {
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .heroText h1 {
+    font-size: 1.75rem;
+  }
+
+  .bookingCard {
+    padding: 1rem;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .tabToggle {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .calendarDayHeader {
+    font-size: 0.75rem;
+    padding: 0.25rem;
+  }
+
+  .timeSlots {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .heroImage img {
+    width: 100%;
+  }
+}

@@ -6,6 +6,7 @@ import { use } from "react";
 import { Doctor } from "./type";
 import DoctorCard from "@/app/components/DoctorCard";
 import { API_ENDPOINTS } from "@/app/utils/api/config";
+import { useAuth } from "@/app/utils/context/Authcontext";
 
 export default function Category({
   params,
@@ -25,6 +26,7 @@ export default function Category({
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
+  const { user } = useAuth();
 
   const first_index = (currentPage - 1) * 6;
   const last_index = currentPage * 6;
@@ -48,25 +50,43 @@ export default function Category({
           .join(" ");
 
         console.log("category_name", category_name);
-        const response = await fetch(API_ENDPOINTS.DOCTORS_BY_SPECIALIZATION(category_name));
+        const response = await fetch(
+          API_ENDPOINTS.DOCTORS_BY_SPECIALIZATION(category_name)
+        );
 
         const data = await response.json();
         console.log("data category--->", data);
-        
+
         const doctorsWithRatings = [];
         for (const doctor of data.doctors) {
+          // console.log("doctor!!!!!",doctor)
           try {
-            const ratingResponse = await fetch(`https://mecare-backend.onrender.com/api/reviews/${doctor.doctor_id}`);
+            const ratingResponse = await fetch(
+              `https://mecare-backend.onrender.com/api/reviews/${doctor.doctor_id}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${user?.token}`,
+                },
+              }
+            );
             const ratingData = await ratingResponse.json();
+            console.log("--!!", ratingData);
             doctorsWithRatings.push({
               ...doctor,
-              ratings: ratingData.average_rating ? parseFloat(ratingData.average_rating) : 0
+              ratings: ratingData.average_rating
+                ? parseFloat(ratingData.average_rating)
+                : 0,
             });
           } catch (error) {
-            console.error(`Error fetching rating for doctor ${doctor.doctor_id}:`, error);
+            console.error(
+              `Error fetching rating for doctor ${doctor.doctor_id}:`,
+              error
+            );
             doctorsWithRatings.push({
               ...doctor,
-              ratings: 0
+              ratings: 0,
             });
           }
         }
@@ -81,7 +101,7 @@ export default function Category({
     fetchBySpecialty();
   }, [category]);
 
-  // console.log("doctos0000", doctors);
+  console.log("doctos0000", doctors);
 
   useEffect(() => {
     let updatedDoctors = doctors;
@@ -98,7 +118,7 @@ export default function Category({
 
     if (filters.rating > 0) {
       updatedDoctors = updatedDoctors.filter(
-        (doctor) => doctor.ratings === filters.rating
+        (doctor) => Math.floor(doctor.ratings) == filters.rating
       );
     }
 

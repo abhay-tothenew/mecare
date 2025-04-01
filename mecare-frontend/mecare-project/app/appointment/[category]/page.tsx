@@ -52,7 +52,26 @@ export default function Category({
 
         const data = await response.json();
         console.log("data category--->", data);
-        setDoctors(data.doctors);
+        
+        const doctorsWithRatings = [];
+        for (const doctor of data.doctors) {
+          try {
+            const ratingResponse = await fetch(`https://mecare-backend.onrender.com/api/reviews/${doctor.doctor_id}`);
+            const ratingData = await ratingResponse.json();
+            doctorsWithRatings.push({
+              ...doctor,
+              ratings: ratingData.average_rating ? parseFloat(ratingData.average_rating) : 0
+            });
+          } catch (error) {
+            console.error(`Error fetching rating for doctor ${doctor.doctor_id}:`, error);
+            doctorsWithRatings.push({
+              ...doctor,
+              ratings: 0
+            });
+          }
+        }
+
+        setDoctors(doctorsWithRatings);
         setTotalPages(data.Pagination.total_pages);
       } catch (error) {
         console.log(error);

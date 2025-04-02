@@ -7,6 +7,7 @@ import { Doctor } from "./type";
 import DoctorCard from "@/app/components/DoctorCard";
 import { API_ENDPOINTS } from "@/app/utils/api/config";
 import { useAuth } from "@/app/utils/context/Authcontext";
+import { FaSpinner } from "react-icons/fa";
 
 export default function Category({
   params,
@@ -26,6 +27,7 @@ export default function Category({
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
 
   const first_index = (currentPage - 1) * 6;
@@ -43,6 +45,7 @@ export default function Category({
   useEffect(() => {
     const fetchBySpecialty = async () => {
       try {
+        setIsLoading(true);
         const categoryName = category.split("_").join(" ");
         const category_name = categoryName
           .split(" ")
@@ -95,6 +98,8 @@ export default function Category({
         setTotalPages(data.Pagination.total_pages);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -183,159 +188,168 @@ export default function Category({
             </p>
           </div>
 
-          {/* Mobile filters - Dropdown version */}
-          <div className={styles.mobileFilters}>
-            <div className={styles.filterContainer}>
-              <h3>Filter By:</h3>
-              <span
-                onClick={() =>
-                  setFilters({ rating: 0, experience: "all", gender: "all" })
-                }
-              >
-                Reset
-              </span>
+          {isLoading ? (
+            <div className={styles.loaderContainer}>
+              <FaSpinner className={styles.spinner} />
+              <p>Loading doctors...</p>
             </div>
+          ) : (
+            <>
+              {/* Mobile filters - Dropdown version */}
+              <div className={styles.mobileFilters}>
+                <div className={styles.filterContainer}>
+                  <h3>Filter By:</h3>
+                  <span
+                    onClick={() =>
+                      setFilters({ rating: 0, experience: "all", gender: "all" })
+                    }
+                  >
+                    Reset
+                  </span>
+                </div>
 
-            <div className={styles.filterDropdown}>
-              <select
-                onChange={(e) =>
-                  handleFilterChange("rating", parseInt(e.target.value))
-                }
-                value={filters.rating}
-              >
-                <option value="0">Rating: Show all</option>
-                <option value="1">Rating: 1 star</option>
-                <option value="2">Rating: 2 stars</option>
-                <option value="3">Rating: 3 stars</option>
-                <option value="4">Rating: 4 stars</option>
-                <option value="5">Rating: 5 stars</option>
-              </select>
-            </div>
+                <div className={styles.filterDropdown}>
+                  <select
+                    onChange={(e) =>
+                      handleFilterChange("rating", parseInt(e.target.value))
+                    }
+                    value={filters.rating}
+                  >
+                    <option value="0">Rating: Show all</option>
+                    <option value="1">Rating: 1 star</option>
+                    <option value="2">Rating: 2 stars</option>
+                    <option value="3">Rating: 3 stars</option>
+                    <option value="4">Rating: 4 stars</option>
+                    <option value="5">Rating: 5 stars</option>
+                  </select>
+                </div>
 
-            <div className={styles.filterDropdown}>
-              <select
-                onChange={(e) =>
-                  handleFilterChange("experience", e.target.value)
-                }
-                value={filters.experience}
-              >
-                <option value="all">Experience: Show all</option>
-                <option value="15">Experience: ≤ 15 years</option>
-                <option value="10">Experience: ≤ 10 years</option>
-                <option value="5">Experience: ≤ 5 years</option>
-                <option value="3">Experience: ≤ 3 years</option>
-                <option value="1">Experience: ≤ 1 year</option>
-              </select>
-            </div>
+                <div className={styles.filterDropdown}>
+                  <select
+                    onChange={(e) =>
+                      handleFilterChange("experience", e.target.value)
+                    }
+                    value={filters.experience}
+                  >
+                    <option value="all">Experience: Show all</option>
+                    <option value="15">Experience: ≤ 15 years</option>
+                    <option value="10">Experience: ≤ 10 years</option>
+                    <option value="5">Experience: ≤ 5 years</option>
+                    <option value="3">Experience: ≤ 3 years</option>
+                    <option value="1">Experience: ≤ 1 year</option>
+                  </select>
+                </div>
 
-            <div className={styles.filterDropdown}>
-              <select
-                onChange={(e) => handleFilterChange("gender", e.target.value)}
-                value={filters.gender}
-              >
-                <option value="all">Gender: Show all</option>
-                <option value="Male">Gender: Male</option>
-                <option value="Female">Gender: Female</option>
-              </select>
-            </div>
-          </div>
-
-          <div className={styles.content}>
-            {/* Desktop Sidebar Filters */}
-            <div className={styles.filters}>
-              <div className={styles.filterContainer}>
-                <h3>Filter By:</h3>
-                <span
-                  onClick={() =>
-                    setFilters({ rating: 0, experience: "all", gender: "all" })
-                  }
-                >
-                  Reset
-                </span>
+                <div className={styles.filterDropdown}>
+                  <select
+                    onChange={(e) => handleFilterChange("gender", e.target.value)}
+                    value={filters.gender}
+                  >
+                    <option value="all">Gender: Show all</option>
+                    <option value="Male">Gender: Male</option>
+                    <option value="Female">Gender: Female</option>
+                  </select>
+                </div>
               </div>
 
-              <div className={styles.filterSection}>
-                <h4>Rating</h4>
-                <label>
-                  <input
-                    type="radio"
-                    name="rating"
-                    checked={filters.rating === 0}
-                    onChange={() => handleFilterChange("rating", 0)}
-                  />{" "}
-                  Show all
-                </label>
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <label key={star}>
-                    <input
-                      type="radio"
-                      name="rating"
-                      checked={filters.rating === star}
-                      onChange={() => handleFilterChange("rating", star)}
-                    />{" "}
-                    {star} star
-                  </label>
-                ))}
-              </div>
+              <div className={styles.content}>
+                {/* Desktop Sidebar Filters */}
+                <div className={styles.filters}>
+                  <div className={styles.filterContainer}>
+                    <h3>Filter By:</h3>
+                    <span
+                      onClick={() =>
+                        setFilters({ rating: 0, experience: "all", gender: "all" })
+                      }
+                    >
+                      Reset
+                    </span>
+                  </div>
 
-              <div className={styles.filterSection}>
-                <h4>Experience</h4>
-                {["all", "15", "10", "5", "3", "1"].map((year) => (
-                  <label key={year}>
-                    <input
-                      type="radio"
-                      name="experience"
-                      checked={filters.experience === year}
-                      onChange={() => handleFilterChange("experience", year)}
+                  <div className={styles.filterSection}>
+                    <h4>Rating</h4>
+                    <label>
+                      <input
+                        type="radio"
+                        name="rating"
+                        checked={filters.rating === 0}
+                        onChange={() => handleFilterChange("rating", 0)}
+                      />{" "}
+                      Show all
+                    </label>
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <label key={star}>
+                        <input
+                          type="radio"
+                          name="rating"
+                          checked={filters.rating === star}
+                          onChange={() => handleFilterChange("rating", star)}
+                        />{" "}
+                        {star} star
+                      </label>
+                    ))}
+                  </div>
+
+                  <div className={styles.filterSection}>
+                    <h4>Experience</h4>
+                    {["all", "15", "10", "5", "3", "1"].map((year) => (
+                      <label key={year}>
+                        <input
+                          type="radio"
+                          name="experience"
+                          checked={filters.experience === year}
+                          onChange={() => handleFilterChange("experience", year)}
+                        />
+                        {year === "all" ? " Show all" : ` ≤ ${year} years`}
+                      </label>
+                    ))}
+                  </div>
+
+                  <div className={styles.filterSection}>
+                    <h4>Gender</h4>
+                    <label>
+                      <input
+                        type="radio"
+                        name="gender"
+                        checked={filters.gender === "all"}
+                        onChange={() => handleFilterChange("gender", "all")}
+                      />{" "}
+                      Show all
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="gender"
+                        checked={filters.gender === "male"}
+                        onChange={() => handleFilterChange("gender", "male")}
+                      />{" "}
+                      Male
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        name="gender"
+                        checked={filters.gender === "female"}
+                        onChange={() => handleFilterChange("gender", "female")}
+                      />{" "}
+                      Female
+                    </label>
+                  </div>
+                </div>
+
+                {/* Doctors Grid */}
+                <div className={styles.doctorGrid}>
+                  {currentDoctors.map((doctor) => (
+                    <DoctorCard
+                      key={doctor.doctor_id}
+                      doctor={doctor}
+                      variant="category"
                     />
-                    {year === "all" ? " Show all" : ` ≤ ${year} years`}
-                  </label>
-                ))}
+                  ))}
+                </div>
               </div>
-
-              <div className={styles.filterSection}>
-                <h4>Gender</h4>
-                <label>
-                  <input
-                    type="radio"
-                    name="gender"
-                    checked={filters.gender === "all"}
-                    onChange={() => handleFilterChange("gender", "all")}
-                  />{" "}
-                  Show all
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="gender"
-                    checked={filters.gender === "male"}
-                    onChange={() => handleFilterChange("gender", "male")}
-                  />{" "}
-                  Male
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="gender"
-                    checked={filters.gender === "female"}
-                    onChange={() => handleFilterChange("gender", "female")}
-                  />{" "}
-                  Female
-                </label>
-              </div>
-            </div>
-
-            {/* Doctors Grid */}
-            <div className={styles.doctorGrid}>
-              {currentDoctors.map((doctor) => (
-                <DoctorCard
-                  key={doctor.doctor_id}
-                  doctor={doctor}
-                  variant="category"
-                />
-              ))}
-            </div>
-          </div>
+            </>
+          )}
         </div>
 
         {/* Pagination Controls */}

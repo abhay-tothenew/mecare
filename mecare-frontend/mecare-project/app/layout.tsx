@@ -4,7 +4,7 @@ import { AuthProvider } from "./utils/context/Authcontext";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "MeCare",
+  title: "MedCare",
   description: "Book appointments with ease",
   keywords: "healthcare, medical, appointments, booking",
 };

@@ -89,7 +89,18 @@ export default function Login() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Login failed");
+        // Handle specific error cases
+        if (response.status === 401) {
+          throw new Error("Invalid email or password");
+        } else if (response.status === 403) {
+          throw new Error("Your account has been locked. Please contact support.");
+        } else if (response.status === 404) {
+          throw new Error("Account not found. Please check your email or sign up.");
+        } else if (response.status === 429) {
+          throw new Error("Too many login attempts. Please try again later.");
+        } else {
+          throw new Error(data.message || "Login failed. Please try again.");
+        }
       }
 
       if (data.token && data.success) {
@@ -104,12 +115,18 @@ export default function Login() {
         });
 
         console.log("user data", data);
+      } else {
+        throw new Error("Invalid response from server");
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setApiError(err.message || "An error occurred during login");
+        setApiError(err.message);
+        // Clear password field on authentication error
+        if (err.message.includes("Invalid email or password")) {
+          setPassword("");
+        }
       } else {
-        setApiError("An error occurred during login");
+        setApiError("An unexpected error occurred. Please try again.");
       }
     } finally {
       if (localStorage.getItem("token")) {

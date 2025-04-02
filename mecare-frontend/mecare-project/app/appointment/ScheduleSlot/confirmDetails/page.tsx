@@ -25,6 +25,7 @@ function ConfirmDetailsContent() {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [userId, setUserId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     age: "",
@@ -116,6 +117,11 @@ function ConfirmDetailsContent() {
       return;
     }
 
+    setIsLoading(true);
+
+    // Show loading state for 5 seconds
+    await new Promise(resolve => setTimeout(resolve, 5000));
+
     const fullAppointmentData = {
       patient: formData,
     };
@@ -159,6 +165,8 @@ function ConfirmDetailsContent() {
       }
     } catch (error) {
       console.log("Error submitting appointment:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -276,8 +284,13 @@ function ConfirmDetailsContent() {
               fullWidth
             />
 
-            <Button type="submit" variant="primary" fullWidth>
-              Confirm Appointment
+            <Button 
+              type="submit" 
+              variant="primary" 
+              fullWidth 
+              disabled={isLoading}
+            >
+              {isLoading ? "Confirming Appointment..." : "Confirm Appointment"}
             </Button>
 
             <p className={styles.terms}>

@@ -33,7 +33,7 @@ export default function Footer() {
           >
             <Image src="/assets/call-icon.svg" width={30} height={30} alt="call icon" />
           </div>
-          <Image src="/assets/WhatsApp.svg" width={25} height={25} alt="whatsapp icon" />
+          <Image src="/assets/WhatsApp.svg" width={25} height={25} alt="whatsapp icon" style = {{cursor:"pointer"}} />
         </div>
       </footer>
 
